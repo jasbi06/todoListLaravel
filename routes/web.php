@@ -11,6 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('eventos/create', 'EventosController@getCreate');
+
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/', 'HomeController@index');
+
+    Route::group(['prefix' => 'eventos'], function(){
+
+        Route::get('/', 'EventosController@getIndex');
+
+        Route::post('create', 'EventosController@postCreate');
+
+
+    });
 });
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
